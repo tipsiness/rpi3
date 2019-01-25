@@ -6,12 +6,12 @@
 <body>
 	<h1>RGB LED Status</h1>
 
-	{% for pin in pins %}
-	<p>The {{ pins[pin].name }}
-	{% if pins[pin].state == true %}
-		is currently on (<a href="/{{pin}}/off">turn off</a>)
+	{% for led in leds %}
+	<p>The {{ leds[led].name }}
+	{% if leds[led].state == true %}
+		is currently on (<a href="/{{led}}/off">turn off</a>)
 	{% else %}
-		is currently off (<a href="/{{pin}}/on">turn on</a>)
+		is currently off (<a href="/{{led}}/on">turn on</a>)
 	{% endif %}
 	</p>
 
