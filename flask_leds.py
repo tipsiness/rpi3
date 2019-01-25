@@ -49,7 +49,7 @@ def action(led, act):
 		'leds' : getGpioState()
 	}
 
-	return render_template('main.html', **gpioState)
+	return render_template('leds.html', **gpioState)
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=9999, debug=True)
