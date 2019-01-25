@@ -25,7 +25,7 @@ def main():
 		'leds' : getGpioState()
 	}
 
-	return render_template('main.html', **gpioState)
+	return render_template('leds.html', **gpioState)
 
 def action(led, act):
 	led = int(led)
