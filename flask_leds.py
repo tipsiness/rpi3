@@ -27,6 +27,7 @@ def main():
 
 	return render_template('leds.html', **gpioState)
 
+@app.route("/<led>/<act>")
 def action(led, act):
 	led = int(led)
 	leds = getGpioState()
