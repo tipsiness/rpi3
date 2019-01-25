@@ -10,7 +10,7 @@ def main():
 		'text' : param
 	}
 
-	return render_template(‘index.html’, **templateData)
+	return render_template(‘request.html’, **templateData)
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=9999, debug=True)
