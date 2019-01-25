@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+<title>Electronic Display</title>
+</head>
+
+<body>
+	<h1>Input Message to Send...</h1>
+	<br>
+	<form name="message_form">
+		<input type="text" name="msg">
+		<button type="submit" id="submit" onclick=msg_send()>Message Send</button>
+	</form>
+
+	<script language="javascript">
+		function msg_send() {
+		document.message_form.submit()
+		}
+	</script>
+</body>
+</html>
