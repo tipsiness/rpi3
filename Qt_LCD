@@ -1,0 +1,18 @@
+# How to run Qt Application on LCD display.
+
+$ DISPLAY=:0.0  ./QtApp
+
+or
+
+$ ./QtApp  -platform  linuxfb:fb=/dev/fb1
+
+
+# Autorun on reboot
+# Open /etc/xdg/lxsession/LXDE-pi/autostart
+
+$ sudo vi /etc/xdg/lxsession/LXDE-pi/autostart
+
+# Add Qt Application
+@sudo /home/pi/QtApp
+
+# Reboot
