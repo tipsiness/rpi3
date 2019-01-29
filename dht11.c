@@ -5,78 +5,79 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define DHTPIN 7
+#define DHTPIN			7
 
-unsigned char get_value(void);
+int dht_data[] = {0, 0, 0, 0, 0};
 
-int data[] = {0, 0, 0, 0, 0};
+static int read_dht_data() {
+	uint8_t laststate = HIGH;
+	uint8_t counter = 0;
+	uint8_t i, j = 0;
 
-int main(int argc, char *argv[]) {
-	int temp, humi, i, j, tmp;
+	dht_data[0] = dht_data[1] = dht_data[2] = dht_data[3] = dht_data[4] = 0;
+	/* Single-Wire Two-Way Communication */
+	pinMode(DHTPIN, OUTPUT);
+
+	/* MCU->DHT, start signal */
+	digitalWrite(DHTPIN, HIGH);
+	delay(1);
+
+	/* MCU pull down, DHT detect a start signal from MCU */
+	digitalWrite(DHTPIN, LOW);
+	delay(18);
+
+	/* MCU pull up to receive response signal from DHT */
+	digitalWrite(DHTPIN, HIGH);
+	delayMicroseconds(40);
+
+	/* MCU read response data consist of temperature and humidity */
+	pinMode(DHTPIN, INPUT);
+	delayMicroseconds(1);
+
+	laststate = digitalRead(DHTPIN);
+
+	for (i = 1; i <= 82; i++) {
+		counter = 0;
+		while (digitalRead(DHTPIN) == laststate) {
+			counter++;
+			delayMicroseconds(1);
+
+			if (counter >= 75)
+				break;
+		}
+		laststate = digitalRead(DHTPIN);
+
+		if ((i > 3) && (i % 2 == 0)) {
+			dht_data[j/8] <<= 1;		// read bit '0'
+			if (counter > 28)
+				dht_data[j/8] |= 1;	// read bit '1'
+			j++;
+		} 
+	}
+	if ((j >= 40) && (dht_data[4] == \
+				((dht_data[0] + dht_data[1] + dht_data[2] +  \
+				  dht_data[3]) & 0xFF))) {
+
+		printf("Humidity = %d %% Temperature = %d *C\n", dht_data[0], dht_data[2]);
+
+		return 1;
+	} else {
+		printf("Data not good, skip (read bytes: %d).\n", j);
+		//printf("0x%04x 0x%04x 0x%04x 0x%04x 0x%04x\n", dht_data[0], dht_data[1], dht_data[2], dht_data[3], dht_data[4]);
+		return 0;
+	}
+}
+int main() {
+	int ret;
+
+	if (wiringPiSetup() == -1)
+		exit(EXIT_FAILURE);
 
 	while (1) {
-		pinMode(DHTPIN, OUTPUT);
+		read_dht_data();
 
-		digitalWrite(DHTPIN, HIGH);
-		delay(1);
-
-		digitalWrite(DHTPIN, LOW);
-		delay(18);
-
-		digitalWrite(DHTPIN, HIGH);
-		delayMicroseconds(40);
-
-		pinMode(DHTPIN, INPUT);
-
-		delayMicroseconds(160);
-
-		for (i = 0; i < 5; i++) {
-			for (j = 0; j < 8; j++) {
-				if (j < 7) {
-					data[i] |= get_value();
-					data[i] = data[i] << 1;
-				} else {
-					data[i] |= get_value();
-				}
-			}
-		}
-
-		tmp = 0;
-
-		for (i = 0; i < 4; i++) {
-			tmp += data[i];
-		}
-		if (data[4] == (tmp & 0xFF)) {
-			humi = data[0];
-			temp = data[2];
-
-			printf("Temperature: %d, Humidity: %d\n", temp, humi);
-		} else {
-			printf("Parity Error\n");
-			printf("data[0]: %d, data[1]: %d, data[2]: %d, data[3]: %d, \
-					data[4]: %d\n", data[0], data[1], data[2], data[3], data[4]);
-		}
-		delay(4000);
+		delay(2000);
 	}
-
 
 	return 0;
 }
-
-unsigned char get_value(void) {
-	unsigned char va = 0;
-	int state;
-
-	while (digitalRead(DHTPIN) == 0);
-
-	delayMicroseconds(28);
-
-	if (digitalRead(DHTPIN) == 1) {
-		va |= 1;
-
-		while (digitalRead(DHTPIN) == 1);
-	}
-
-	return va;
-}
-
