@@ -5,11 +5,8 @@ sudo apt update
 sudo apt upgrade
 
 echo "======> Install dependencies"
-sudo apt-get purge wolfram-engine
-sudo apt-get install build-essential git cmake pkg-config libjpeg-dev
-libtiff5-dev libjasper-dev libpng12-dev libavcodec-dev libavformat-dev
-libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev libatlasbase-
-dev gfortran python2.7-dev python3-dev -y
+sudo apt-get purge wolfram-engine -y
+sudo apt-get install build-essential git cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev libatlasbase-dev gfortran python2.7-dev python3-dev -y
 
 echo "======> Download opencv.zip"
 wget https://github.com/Itseez/opencv/archive/3.1.0.zip -O opencv.zip
@@ -39,7 +36,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D WITH_QT=OFF \
 -D WITH_OPENGL=ON \
 -D WITH_IPP=OFF \
--DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.1.0/modules ../
+-DOPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.1.0/modules ../
 
 echo "======> Compile opencv"
 make -j4
