@@ -27,6 +27,7 @@ cd opencv-3.1.0
 mkdir build
 cd build
 
+# if occurs 'pre-compiled header' additional include option '-D ENABLE_PRECOMPILED_HEADERS=OFF'.
 echo "======> Configuration opencv"
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D CMAKE_INSTALL_PREFIX=/usr \
