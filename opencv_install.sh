@@ -6,7 +6,7 @@ sudo apt upgrade
 
 echo "======> Install dependencies"
 sudo apt-get purge wolfram-engine -y
-sudo apt-get install build-essential git cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev libatlasbase-dev gfortran python2.7-dev python3-dev -y
+sudo apt-get install build-essential git cmake pkg-config libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev libatlas-base-dev gfortran python2.7-dev python3-dev -y
 
 echo "======> Download opencv.zip"
 wget https://github.com/Itseez/opencv/archive/3.1.0.zip -O opencv.zip
