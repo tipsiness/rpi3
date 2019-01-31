@@ -25,15 +25,10 @@ using namespace std;
 #define MAX_FRAME	4
 #define REQ_FRAME_CNT	4
 
-//#define HDMI_DISPLAY	0
 #define TX_DATA_SIZE	8192
 #define RX_DATA_SIZE	8192
 
 int sleep_divisor = 1;
-
-// declare Mat Array for 4-frame
-//unsigned char *frame_data;
-//unsigned char *total_frames;
 
 int capture(int cnt);
 
@@ -56,18 +51,12 @@ int main(int, char *argv[])
 
 	memset(&server_addr, 0, sizeof(server_addr));
 	server_addr.sin_family = AF_INET;
-	//server_addr.sin_addr.s_addr = htonl(inet_addr("192.168.100."));
 	server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	//server_addr.sin_port = htons(atoi(argv[1]));
 	server_addr.sin_port = htons(SERVER_PORT);
 
-	// Show IP Address
 	char *strIpAddr = (char*)malloc(sizeof(40));
 	memset(strIpAddr, 0x0, 40);
-	/*
-	strIpAddr = inet_ntoa(server_addr.sin_addr);
-	printf("IP Address: %s\n", strIpAddr);
-	*/
+	
 	int ret = getIpAddress(1, strIpAddr);
 	printf("IP Address: %s\n", strIpAddr);
 
