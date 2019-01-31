@@ -29,7 +29,6 @@
 using namespace cv;
 using namespace std;
 
-// declare Mat Array for 4-frame
 unsigned char *frame_data;
 
 int server_fd, client_fd;
@@ -54,13 +53,10 @@ int main(int, char**)
 
 	memset(&server_addr, 0, sizeof(server_addr));
 	server_addr.sin_family = AF_INET;
-	//server_addr.sin_addr.s_addr = inet_addr("192.168.14.31");
-	server_addr.sin_addr.s_addr = inet_addr("192.168.0.3");
+	server_addr.sin_addr.s_addr = inet_addr("192.168.0.XXX");
 	server_addr.sin_port = htons(SERVER_PORT);
 
 	connect(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr));
-
-	//write(server_fd, "START", 5);
 
 	recv_size = 640 * 480 * 3;
 	frameData = (char*)malloc(sizeof(char)*recv_size);
@@ -89,12 +85,7 @@ int main(int, char**)
 		tx_len = 0;
 
 		printf("Sending data %ld bytes.\n", frame.total() * frame.elemSize());
-		/*
-		while (total_tx_len < data_size) {
-			tx_len = write(server_fd, (char*)&frameData[total_tx_len], TX_DATA_SIZE);
-			total_tx_len += tx_len;
-		}
-		*/
+		
 		total_tx_len = write(server_fd, (char*)frameData, data_size);
 
 		printf("Data Transmission Completed: %ld\n", total_tx_len);
