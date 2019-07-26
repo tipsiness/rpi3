@@ -4,7 +4,7 @@ import urllib2
 
 app = Flask(__name__)
 
-apiKey = 'H30INHJ8L7THAOBH'
+apiKey = ''
 baseURL = 'http://api.thingspeak.com/update?api_key=%s' % apiKey
 
 @app.route('/success/<name>')
