@@ -10,8 +10,8 @@ print ("MySQL connector module import succeed")
 
 config = {
 	'user':'root',
-	'password':'root',
-	'host':'35.229.99.14',
+	'password':'',
+	'host':'',
 	'client_flags':[ClientFlag.SSL],
 	'database':'room1',
 	'ssl_ca':'/home/pi/server-ca.pem',
@@ -21,7 +21,7 @@ config = {
 
 app = Flask(__name__)
 
-apiKey = 'H30INHJ8L7THAOBH'
+apiKey = ''
 baseURL = 'http://api.thingspeak.com/update?api_key=%s' % apiKey
 
 @app.route('/success/<name>')
