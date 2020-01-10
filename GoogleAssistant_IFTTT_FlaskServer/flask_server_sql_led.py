@@ -34,47 +34,47 @@ def success(name):
 
 @app.route('/', methods=['POST', 'GET'])
 def main():
-	data = request.get_json(silent=True)
-	resp = json.dumps(data)
-	values = json.loads(resp)
+    data = request.get_json(silent=True)
+    resp = json.dumps(data)
+    values = json.loads(resp)
 
-	print(resp)
+    print(resp)
 
-	name = values['name']
-	state = values['state']
-	print "Device Name: ", name
-	print "Device State: ", state
+    name = values['name']
+    state = values['state']
+    print "Device Name: ", name
+    print "Device State: ", state
     
-	stateValue = 0
+    stateValue = 0
     if state == 'on':
-	  stateValue = 1
-	  GPIO.output(11, GPIO.HIGH)
-	  print "Lamp is turned on."
+	stateValue = 1
+	GPIO.output(11, GPIO.HIGH)
+	print "Lamp is turned on."
     elif state == 'off':
-      stateValue = 0
-	  GPIO.output(11, GPIO.LOW)
-	  print "Lamp is turned off."
+    	stateValue = 0
+	GPIO.output(11, GPIO.LOW)
+	print "Lamp is turned off."
 
-	conn = mysql.connector.connect(**config)
+    conn = mysql.connector.connect(**config)
 
-	cursor = conn.cursor(buffered=True)
-	sqlQueryStr = """INSERT INTO device (name, state, position, datetime) VALUES (%s, %s, %s, %s)"""
-	dt = datetime.datetime.now()
-	dtStr = dt.strftime("%Y-%m-%d %H:%M:%S")
-	print (dtStr)
+    cursor = conn.cursor(buffered=True)
+    sqlQueryStr = """INSERT INTO device (name, state, position, datetime) VALUES (%s, %s, %s, %s)"""
+    dt = datetime.datetime.now()
+    dtStr = dt.strftime("%Y-%m-%d %H:%M:%S")
+    print (dtStr)
 
-	sqlQueryParam = (name, stateValue, "bathroom", dtStr)
-	cursor.execute(sqlQueryStr, sqlQueryParam)
+    sqlQueryParam = (name, stateValue, "bathroom", dtStr)
+    cursor.execute(sqlQueryStr, sqlQueryParam)
 
-	query = urllib2.urlopen(baseURL + '&field1=%s' % (str(stateValue)))
-	query.read()
-	query.close()
+    query = urllib2.urlopen(baseURL + '&field1=%s' % (str(stateValue)))
+    query.read()
+    query.close()
 
-	conn.commit()
-	cursor.close()
-	conn.close()
+    conn.commit()
+    cursor.close()
+    conn.close()
 
-	return resp
+    return resp
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8888, debug=True)
