@@ -10,10 +10,10 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def main():
   data = request.get_json(silent=True)
-	resp = json.dumps(data)
-	values = json.loads(resp)
+  resp = json.dumps(data)
+  values = json.loads(resp)
 
-	print(resp)
+  print(resp)
 
   state = values['state']
   print "Device State: ", state
@@ -21,14 +21,14 @@ def main():
   stateValue = 0
   if state == 'on':
     stateValue = 1
-	  GPIO.output(11, GPIO.HIGH)
-		print "Lamp is turned on."
+    GPIO.output(11, GPIO.HIGH)
+    print "Lamp is turned on."
   elif state == 'off':
     stateValue = 0
-		GPIO.output(11, GPIO.LOW)
-		print "Lamp is turned off."
+    GPIO.output(11, GPIO.LOW)
+    print "Lamp is turned off."
     
-	return resp
+return resp
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8888, debug=True)
