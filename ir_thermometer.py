@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
             amb_temp = sensor.get_amb_temp()
             obj_temp = sensor.get_obj_temp()
-            print("%s ambient temperature: %.2f, object temperatue: %.2f“                   %(curr_time, amb_temp, obj_temp))
+            print("%s ambient temperature: %.2f, object temperatue: %.2f" %(curr_time, amb_temp, obj_temp))
 
             time.sleep(3)
     except KeyboardInterrupt:
