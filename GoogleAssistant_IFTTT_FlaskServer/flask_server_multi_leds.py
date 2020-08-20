@@ -9,7 +9,7 @@ GPIO.setup(12, GPIO.OUT)
 
 app = Flask(__name__)
 
-apiKey = '2RB6R1Q2QDVALSYJ'
+apiKey = ''
 baseURL = 'http://api.thingspeak.com/update?api_key=%s' % apiKey
 
 @app.route('/', methods=['POST', 'GET'])
