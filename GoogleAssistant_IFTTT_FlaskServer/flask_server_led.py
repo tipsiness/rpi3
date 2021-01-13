@@ -28,7 +28,7 @@ def main():
     GPIO.output(11, GPIO.LOW)
     print "Lamp is turned off."
     
-return resp
+  return resp
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8888, debug=True)
