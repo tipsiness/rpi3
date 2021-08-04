@@ -15,7 +15,9 @@ def main():
 
   print(resp)
 
+  name = values['name']
   state = values['state']
+  print "Device Name: ", name
   print "Device State: ", state
     
   stateValue = 0
